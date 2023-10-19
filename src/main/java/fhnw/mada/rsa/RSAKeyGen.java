@@ -30,7 +30,7 @@ public final class RSAKeyGen {
     IO.writeFile("pk.txt", "(" + n + "," + e + ")");
   }
 
-  private static BigInteger findD(BigInteger e, BigInteger m) {
+  public static BigInteger findD(BigInteger e, BigInteger m) {
     BigInteger a = e, b = m;
     BigInteger x0 = ONE, y0 = ZERO, x1 = ZERO, y1 = ONE;
     BigInteger q, r;
@@ -49,9 +49,9 @@ public final class RSAKeyGen {
       b = r;
     }
 
-    if (ZERO.compareTo(y0) > 0) {
-      y0 = y0.add(m);
+    if (ZERO.compareTo(x0) > 0) {
+      x0 = x0.add(m);
     }
-    return ONE.equals(a) ? y0 : BigInteger.valueOf(-1);
+    return ONE.equals(a) ? x0 : BigInteger.valueOf(-1);
   }
 }
