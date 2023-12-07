@@ -6,24 +6,25 @@ import fhnw.mada.rsa.RSAKeyGen;
 
 public class App {
 
-  public static void main(String[] args) {
-    // Generate a valid RSA Key Pair and save them into pk.txt and sk.txt
-    RSAKeyGen.generateKeyPair();
+    public static void main(String[] args) {
+        // Generate a valid RSA Key Pair and save them into pk.txt and sk.txt
+        RSAKeyGen.generateKeyPair();
 
-    // Encrypt the file text.txt using the pk.txt key and save the result to chiffre.txt
-    String encryptedText = RSACypher.encrypt(IO.readFile("pk.txt"), IO.readFile("text.txt"));
-    IO.writeFile("chiffre.txt", encryptedText);
+        // Encrypt the file text.txt using the pk.txt key and save the result to chiffre.txt
+        String encryptedText = RSACypher.encrypt(IO.readFile("rsa/pk.txt"),
+            IO.readFile("rsa/text.txt"));
+        IO.writeFile("rsa/chiffre.txt", encryptedText);
 
-    // Decrypt the file chiffre.txt using the sk.txt and save the result to text-d.txt
-    // text-d.txt should have the same content as text.txt if everything worked correctly
-    String decryptedText = RSACypher.decrypt(IO.readFile("sk.txt"), encryptedText);
-    IO.writeFile("text-d.txt", decryptedText);
+        // Decrypt the file chiffre.txt using the sk.txt and save the result to text-d.txt
+        // text-d.txt should have the same content as text.txt if everything worked correctly
+        String decryptedText = RSACypher.decrypt(IO.readFile("rsa/sk.txt"), encryptedText);
+        IO.writeFile("rsa/text-d.txt", decryptedText);
 
-    // Decrypt the provided file with the provided key and save the result to the file solution.txt
-    String decryptedProvidedText = RSACypher.decrypt(
-        IO.readFile("provided-sk.txt"),
-        IO.readFile("provided-chiffre.txt")
-    );
-    IO.writeFile("solution.txt", decryptedProvidedText);
-  }
+        // Decrypt the provided file with the provided key and save the result to the file solution.txt
+        String decryptedProvidedText = RSACypher.decrypt(
+            IO.readFile("rsa/provided-sk.txt"),
+            IO.readFile("rsa/provided-chiffre.txt")
+        );
+        IO.writeFile("rsa/rsa-solution.txt", decryptedProvidedText);
+    }
 }
