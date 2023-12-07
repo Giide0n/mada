@@ -4,7 +4,6 @@ import java.math.BigInteger;
 
 public class Exp {
 
-    private static final BigInteger ZERO = BigInteger.ZERO;
     private static final BigInteger ONE = BigInteger.ONE;
 
     public static BigInteger fastExponentiation(BigInteger x, BigInteger e, BigInteger m) {

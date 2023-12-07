@@ -1,8 +1,12 @@
 package fhnw.mada.elgamal;
 
+import fhnw.mada.other.Exp;
 import java.math.BigInteger;
+import java.util.Random;
 
 public final class Elgamal {
+
+    private static final BigInteger ONE = BigInteger.ONE;
 
     private static final BigInteger n = new BigInteger(
         "FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1"
@@ -19,11 +23,30 @@ public final class Elgamal {
 
     private static final BigInteger g = BigInteger.valueOf(2);
 
+    private Elgamal() {
+    }
+
     public static BigInteger generatePrivateKey() {
-        return null;
+        BigInteger max = n.subtract(ONE);
+
+        Random random = new Random();
+        BigInteger result;
+        do {
+            result = new BigInteger(max.bitLength(), random);
+        } while (result.compareTo(max) >= 0);
+
+        return result;
     }
 
     public static BigInteger generatePublicKey(BigInteger b) {
+        return Exp.fastExponentiation(g, b, n.subtract(ONE));
+    }
+
+    public static String encrypt(String text, BigInteger publicKey) {
+        return null;
+    }
+
+    public static String decrypt(String text, BigInteger privateKey) {
         return null;
     }
 }
