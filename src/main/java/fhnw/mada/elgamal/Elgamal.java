@@ -40,7 +40,7 @@ public final class Elgamal {
     }
 
     public static BigInteger calculateExp(BigInteger aOrB) {
-        return Exp.fastExponentiation(g, aOrB, n.subtract(ONE));
+        return Exp.fastExponentiation(g, aOrB, n);
     }
 
     public static String encrypt(String text, BigInteger publicKey) {
