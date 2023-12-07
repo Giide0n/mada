@@ -45,11 +45,12 @@ public class App {
         String decryptedText = Elgamal.decrypt(encryptedText, b);
         IO.writeFile("elgamal/text-d.txt", decryptedText);
 
-        /*
+        BigInteger providedSk = new BigInteger(IO.readFile("elgamal/provided-sk.txt").trim());
         String decryptedProvidedText = Elgamal.decrypt(
             IO.readFile("elgamal/provided-chiffre.txt"),
-            new BigInteger(IO.readFile("elgamal/provided-sk.txt"))
+            providedSk
         );
-         */
+        System.out.println(decryptedProvidedText);
+        IO.writeFile("elgamal/elgamal-solution.txt", decryptedProvidedText);
     }
 }

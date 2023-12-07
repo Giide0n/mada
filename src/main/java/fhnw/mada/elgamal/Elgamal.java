@@ -58,19 +58,20 @@ public final class Elgamal {
 
     public static String decrypt(String text, BigInteger privateKey) {
         return Arrays.stream(text.split(";"))
-            .map(l -> decryptLetter(l, privateKey))
+            .map(l -> decryptLetter(l, privateKey, n))
             .map(x -> String.valueOf((char) x.intValue()))
             .reduce((a, b) -> a + b)
             .orElse("");
     }
 
-    private static BigInteger decryptLetter(String encryptedLetter, BigInteger privateKey) {
+    public static BigInteger decryptLetter(String encryptedLetter, BigInteger privateKey,
+        BigInteger m) {
         String input = encryptedLetter.replaceAll("[()]", "");
         String[] numbers = input.split(",");
 
         BigInteger y1 = new BigInteger(numbers[0].trim());
         BigInteger y2 = new BigInteger(numbers[1].trim());
 
-        return y2.multiply(Exp.findD(n, Exp.fastExponentiation(y1, privateKey, n))).mod(n);
+        return y2.multiply(Exp.findD(Exp.fastExponentiation(y1, privateKey, m), m)).mod(m);
     }
 }

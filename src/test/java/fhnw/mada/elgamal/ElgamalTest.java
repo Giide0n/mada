@@ -13,4 +13,15 @@ public class ElgamalTest extends TestCase {
 
         assertEquals(expected, actual);
     }
+
+    public void testDecryptLetter() {
+        String chiffre = "(10, 6)";
+        BigInteger privateKey = BigInteger.valueOf(3);
+        BigInteger m = BigInteger.valueOf(13);
+
+        BigInteger expected = BigInteger.valueOf(7);
+        BigInteger actual = Elgamal.decryptLetter(chiffre, privateKey, m);
+
+        assertEquals(expected, actual);
+    }
 }
