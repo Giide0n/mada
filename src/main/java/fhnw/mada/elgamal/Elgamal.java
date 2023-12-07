@@ -56,8 +56,8 @@ public final class Elgamal {
         return "(" + y1 + "," + y2 + ")";
     }
 
-    public static String decrypt(String text, BigInteger privateKey) {
-        return Arrays.stream(text.split(";"))
+    public static String decrypt(String chiffre, BigInteger privateKey) {
+        return Arrays.stream(chiffre.split(";"))
             .map(l -> decryptLetter(l, privateKey, n))
             .map(x -> String.valueOf((char) x.intValue()))
             .reduce((a, b) -> a + b)
