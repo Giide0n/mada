@@ -9,7 +9,7 @@ public class ElgamalTest extends TestCase {
         BigInteger b = BigInteger.valueOf(2);
 
         BigInteger expected = BigInteger.valueOf(4);
-        BigInteger actual = Elgamal.generatePublicKey(b);
+        BigInteger actual = Elgamal.calculateExp(b);
 
         assertEquals(expected, actual);
     }

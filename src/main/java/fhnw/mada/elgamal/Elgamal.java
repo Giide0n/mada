@@ -26,7 +26,7 @@ public final class Elgamal {
     private Elgamal() {
     }
 
-    public static BigInteger generatePrivateKey() {
+    public static BigInteger generateAorB() {
         BigInteger max = n.subtract(ONE);
 
         Random random = new Random();
@@ -38,15 +38,31 @@ public final class Elgamal {
         return result;
     }
 
-    public static BigInteger generatePublicKey(BigInteger b) {
-        return Exp.fastExponentiation(g, b, n.subtract(ONE));
+    public static BigInteger calculateExp(BigInteger aOrB) {
+        return Exp.fastExponentiation(g, aOrB, n.subtract(ONE));
     }
 
     public static String encrypt(String text, BigInteger publicKey) {
-        return null;
+        return text.chars()
+            .mapToObj(BigInteger::valueOf)
+            .map(l -> encryptLetter(l, publicKey))
+            .reduce((a, b) -> a + ";" + b)
+            .orElse("");
+    }
+
+    private static String encryptLetter(BigInteger letter, BigInteger publicKey) {
+        BigInteger a = generateAorB();
+        BigInteger y1 = calculateExp(a);
+        BigInteger y2 = Exp.fastExponentiation(publicKey, a, n).multiply(letter).mod(n);
+
+        return "(" + y1 + "," + y2 + ")";
     }
 
     public static String decrypt(String text, BigInteger privateKey) {
+        return null;
+    }
+
+    private static Character decryptLetter(String encryptedLetter, BigInteger privateKey) {
         return null;
     }
 }
