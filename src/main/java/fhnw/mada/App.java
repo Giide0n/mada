@@ -1,12 +1,19 @@
 package fhnw.mada;
 
+import fhnw.mada.elgamal.Elgamal;
 import fhnw.mada.other.IO;
 import fhnw.mada.rsa.RSACypher;
 import fhnw.mada.rsa.RSAKeyGen;
+import java.math.BigInteger;
 
 public class App {
 
     public static void main(String[] args) {
+        // startRSA();
+        startElgamal();
+    }
+
+    private static void startRSA() {
         // Generate a valid RSA Key Pair and save them into pk.txt and sk.txt
         RSAKeyGen.generateKeyPair();
 
@@ -26,5 +33,23 @@ public class App {
             IO.readFile("rsa/provided-chiffre.txt")
         );
         IO.writeFile("rsa/rsa-solution.txt", decryptedProvidedText);
+    }
+
+    private static void startElgamal() {
+        BigInteger b = Elgamal.generateAorB();
+        BigInteger gb = Elgamal.calculateExp(b);
+
+        String encryptedText = Elgamal.encrypt(IO.readFile("elgamal/text.txt"), gb);
+        IO.writeFile("elgamal/chiffre.txt", encryptedText);
+
+        String decryptedText = Elgamal.decrypt(encryptedText, b);
+        IO.writeFile("elgamal/text-d.txt", decryptedText);
+
+        /*
+        String decryptedProvidedText = Elgamal.decrypt(
+            IO.readFile("elgamal/provided-chiffre.txt"),
+            new BigInteger(IO.readFile("elgamal/provided-sk.txt"))
+        );
+         */
     }
 }
