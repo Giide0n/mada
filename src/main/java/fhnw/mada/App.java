@@ -61,8 +61,12 @@ public class App {
     }
 
     private static void startHuffman() {
-        String codeTable = Huffman.generateCodeTable(IO.readFile("huffman/text.txt"));
+        String text = IO.readFile("huffman/text.txt");
+        String codeTable = Huffman.generateCodeTable(text);
         IO.writeFile("huffman/dec_tab.txt", codeTable);
-        System.out.println(codeTable);
+
+        Byte[] encodedText = Huffman.encode(text, codeTable);
+
+        return;
     }
 }

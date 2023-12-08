@@ -3,6 +3,7 @@ package fhnw.mada.huffman;
 import fhnw.mada.huffman.tree.ConnectionNode;
 import fhnw.mada.huffman.tree.LetterNode;
 import fhnw.mada.huffman.tree.Node;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -32,6 +33,24 @@ public final class Huffman {
         }
 
         return nodes.get(0).toString();
+    }
+
+    public static Byte[] encode(String text, String codeTable) {
+        Map<Integer, String> table = Arrays.stream(codeTable.split("-"))
+            .map(s -> s.split(":"))
+            .collect(Collectors.toMap(a -> Integer.parseInt(a[0]), a -> a[1]));
+
+        String bitString = text.chars()
+            .boxed()
+            .map(table::get)
+            .reduce((a, b) -> a + b)
+            .orElse("");
+
+        String extendedBitString = bitString + "1" + "0".repeat(8 - 1 - (bitString.length() % 8));
+
+        return Arrays.stream(extendedBitString.split("(?<=\\G.{8})"))
+            .map(s -> (byte) Integer.parseInt(s, 2))
+            .toArray(Byte[]::new);
     }
 
     private static Node findAndPopMin(List<Node> nodes) {
