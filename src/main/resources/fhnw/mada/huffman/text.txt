@@ -1,0 +1,1 @@
+Das ist ein beliebiger Text der mit der Huffman-Codierung codiert und wieder decodiert werden soll.

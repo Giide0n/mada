@@ -1,6 +1,7 @@
 package fhnw.mada;
 
 import fhnw.mada.elgamal.Elgamal;
+import fhnw.mada.huffman.Huffman;
 import fhnw.mada.other.IO;
 import fhnw.mada.rsa.RSACypher;
 import fhnw.mada.rsa.RSAKeyGen;
@@ -9,8 +10,9 @@ import java.math.BigInteger;
 public class App {
 
     public static void main(String[] args) {
-        startRSA();
-        startElgamal();
+        // startRSA();
+        // startElgamal();
+        startHuffman();
     }
 
     private static void startRSA() {
@@ -56,5 +58,11 @@ public class App {
             providedSk
         );
         IO.writeFile("elgamal/elgamal-solution.txt", decryptedProvidedText);
+    }
+
+    private static void startHuffman() {
+        String codeTable = Huffman.generateCodeTable(IO.readFile("huffman/text.txt"));
+        IO.writeFile("huffman/dec_tab.txt", codeTable);
+        System.out.println(codeTable);
     }
 }
