@@ -17,7 +17,7 @@ public class LetterNode extends BasicNode {
 
     @Override
     public String constructCode(Integer letterCodePoint) {
-        return "";
+        return parent != null ? "" : "0";
     }
 
     @Override

@@ -2,7 +2,7 @@ package fhnw.mada.huffman.tree;
 
 public abstract class BasicNode implements Node {
 
-    private Node parent;
+    protected Node parent;
 
     public void setParent(Node parent) {
         this.parent = parent;
