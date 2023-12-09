@@ -66,7 +66,14 @@ public class App {
         IO.writeFile("huffman/dec_tab.txt", codeTable);
 
         Byte[] encodedText = Huffman.encode(text, codeTable);
+        IO.writeByteArray("huffman/output.dat", encodedText);
 
-        return;
+        String decryptedText = Huffman.decode(encodedText, codeTable);
+        IO.writeFile("huffman/dec_text.txt", decryptedText);
+
+        String providedCodeTable = IO.readFile("huffman/provided_dec_tab-mada.txt");
+        Byte[] providedEncodedText = IO.readByteArray("huffman/provided-output-mada.dat");
+        String decodedProvidedText = Huffman.decode(providedEncodedText, providedCodeTable);
+        IO.writeFile("huffman/huffman-solution.txt", decodedProvidedText);
     }
 }

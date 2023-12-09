@@ -1,0 +1,1 @@
+Das Verfahren lohnt sich in der vorgestellten Form nur fuer Texte mit einer gewissen Laenge. Ansonsten ist der Overhead fuer die Erstellung der Tabelle 

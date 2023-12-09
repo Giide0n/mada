@@ -3,6 +3,7 @@ package fhnw.mada.huffman;
 import fhnw.mada.huffman.tree.ConnectionNode;
 import fhnw.mada.huffman.tree.LetterNode;
 import fhnw.mada.huffman.tree.Node;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -43,14 +44,42 @@ public final class Huffman {
         String bitString = text.chars()
             .boxed()
             .map(table::get)
-            .reduce((a, b) -> a + b)
-            .orElse("");
+            .collect(Collectors.joining());
 
         String extendedBitString = bitString + "1" + "0".repeat(8 - 1 - (bitString.length() % 8));
+        Byte temp = (byte) Integer.parseInt(extendedBitString.split("(?<=\\G.{8})")[0], 2);
 
         return Arrays.stream(extendedBitString.split("(?<=\\G.{8})"))
             .map(s -> (byte) Integer.parseInt(s, 2))
             .toArray(Byte[]::new);
+    }
+
+    public static String decode(Byte[] encodedText, String codeTable) {
+        Map<String, Integer> table = Arrays.stream(codeTable.split("-"))
+            .map(s -> s.split(":"))
+            .collect(Collectors.toMap(a -> a[1], a -> Integer.parseInt(a[0])));
+
+        String extendedBitString = Arrays.stream(encodedText)
+            .map(b -> String.format("%8s", Integer.toBinaryString(b & 0xFF)).replace(' ', '0'))
+            .collect(Collectors.joining());
+
+        String bitString = extendedBitString.substring(0, extendedBitString.lastIndexOf("1"));
+
+        int i = 0;
+        int j = 1;
+        List<Integer> codePoints = new ArrayList<>();
+        while (i < bitString.length() && j <= bitString.length()) {
+            String possibleCode = bitString.substring(i, j);
+            if (table.containsKey(possibleCode)) {
+                codePoints.add(table.get(possibleCode));
+                i = j;
+            }
+            j++;
+        }
+
+        return codePoints.stream()
+            .map(Character::toString)
+            .collect(Collectors.joining());
     }
 
     private static Node findAndPopMin(List<Node> nodes) {
