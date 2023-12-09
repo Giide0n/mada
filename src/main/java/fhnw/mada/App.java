@@ -10,8 +10,8 @@ import java.math.BigInteger;
 public class App {
 
     public static void main(String[] args) {
-        // startRSA();
-        // startElgamal();
+        startRSA();
+        startElgamal();
         startHuffman();
     }
 
@@ -61,16 +61,21 @@ public class App {
     }
 
     private static void startHuffman() {
+        // Read a text and generate a matching code table
         String text = IO.readFile("huffman/text.txt");
         String codeTable = Huffman.generateCodeTable(text);
         IO.writeFile("huffman/dec_tab.txt", codeTable);
 
+        // encode the text using the generated code table
         Byte[] encodedText = Huffman.encode(text, codeTable);
         IO.writeByteArray("huffman/output.dat", encodedText);
 
+        // decode the encoded text
+        // the result should match the input file if everything went right
         String decryptedText = Huffman.decode(encodedText, codeTable);
         IO.writeFile("huffman/dec_text.txt", decryptedText);
 
+        // decode the provided data using the provided code table
         String providedCodeTable = IO.readFile("huffman/provided_dec_tab-mada.txt");
         Byte[] providedEncodedText = IO.readByteArray("huffman/provided-output-mada.dat");
         String decodedProvidedText = Huffman.decode(providedEncodedText, providedCodeTable);
