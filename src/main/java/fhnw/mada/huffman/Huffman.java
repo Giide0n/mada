@@ -55,7 +55,7 @@ public final class Huffman {
     }
 
     public static String decode(Byte[] encodedText, String codeTable) {
-        Map<String, Integer> table = Arrays.stream(codeTable.split("-"))
+        Map<String, Integer> table = Arrays.stream(codeTable.replaceAll("\n", "").split("-"))
             .map(s -> s.split(":"))
             .collect(Collectors.toMap(a -> a[1], a -> Integer.parseInt(a[0])));
 
